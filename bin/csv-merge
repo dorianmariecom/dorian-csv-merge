@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "csv"
+
+abort "USAGE: csv-merge CSV_FILE1 CSV_FILE2... CSV_OUTPUT" if ARGV.size < 3
+
+INPUTS = ARGV[...-1].map { |input| CSV.parse(File.read(input), headers: true) }
+OUTPUT = ARGV.last
+HEADERS = INPUTS.first.headers
+
+CSV.open(OUTPUT, "w") do |csv|
+  csv << HEADERS
+  INPUTS.each do |input|
+    input.each do |line|
+      csv << line
+    end
+  end
+end
