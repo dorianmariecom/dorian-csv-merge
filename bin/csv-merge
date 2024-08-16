@@ -11,9 +11,5 @@ HEADERS = INPUTS.first.headers
 
 CSV.open(OUTPUT, "w") do |csv|
   csv << HEADERS
-  INPUTS.each do |input|
-    input.each do |line|
-      csv << line
-    end
-  end
+  INPUTS.each { |input| input.each { |line| csv << line } }
 end

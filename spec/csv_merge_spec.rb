@@ -14,7 +14,9 @@ RSpec.describe "csv-merge" do
     File.write(first, [headers, "1,Dorian"].join("\n"))
     File.write(second, [headers, "2,Damien"].join("\n"))
     `bin/csv-merge #{first.path} #{second.path} #{output.path}`
-    expect(File.read(output)).to eq([headers, "1,Dorian", "2,Damien"].join("\n") + "\n")
+    expect(File.read(output)).to eq(
+      [headers, "1,Dorian", "2,Damien"].join("\n") + "\n"
+    )
   ensure
     begin
       File.delete(first)
