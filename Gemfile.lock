@@ -1,8 +1,7 @@
 PATH
   remote: .
   specs:
-    dorian-csv-all (0.0.1)
-      activesupport
+    dorian-csv-merge (0.0.1)
       csv
 
 GEM
@@ -98,7 +97,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  dorian-csv-all!
+  dorian-csv-merge!
   dorian-times
   rspec
   rubocop-rails-omakase
