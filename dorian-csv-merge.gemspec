@@ -3,7 +3,7 @@
 Gem::Specification.new do |s|
   s.name = "dorian-csv-merge"
   s.version = "0.0.1"
-  s.summary = "Merges multiple csv files with headers"
+  s.summary = "merges multiple csv files with headers"
   s.description =
     "#{s.summary}\n\ne.g. `csv-merge users_1.csv users_2.csv users.csv`"
   s.authors = ["Dorian Marié"]
