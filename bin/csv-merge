@@ -4,11 +4,6 @@
 require "csv"
 require "dorian/arguments"
 
-abort "USAGE: csv-merge CSV_FILE1 CSV_FILE2... CSV_OUTPUT" if ARGV.size < 3
-
-INPUTS = ARGV[...-1].map { |input| CSV.parse(File.read(input), headers: true) }
-OUTPUT = ARGV.last
-
 parsed =
   Dorian::Arguments.parse(
     version: {
