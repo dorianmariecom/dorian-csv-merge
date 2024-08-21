@@ -2,14 +2,36 @@
 # frozen_string_literal: true
 
 require "csv"
+require "dorian/arguments"
 
 abort "USAGE: csv-merge CSV_FILE1 CSV_FILE2... CSV_OUTPUT" if ARGV.size < 3
 
 INPUTS = ARGV[...-1].map { |input| CSV.parse(File.read(input), headers: true) }
 OUTPUT = ARGV.last
-HEADERS = INPUTS.first.headers
 
-CSV.open(OUTPUT, "w") do |csv|
-  csv << HEADERS
-  INPUTS.each { |input| input.each { |line| csv << line } }
+parsed =
+  Dorian::Arguments.parse(
+    version: {
+      alias: :v
+    },
+    help: {
+      alias: :h
+    }
+  )
+
+abort parsed.help if parsed.options.help
+
+if parsed.options.version
+  abort File.read(File.expand_path("../../VERSION", __FILE__))
+end
+
+output = parsed.arguments.last || parsed.files.last
+inputs = (parsed.files - [output]).map do |file|
+  CSV.parse(File.read(file), headers: true)
+end
+headers = inputs.first.headers
+
+CSV.open(output, "w") do |csv|
+  csv << headers
+  inputs.each { |input| input.each { |line| csv << line } }
 end
