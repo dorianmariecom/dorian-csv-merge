@@ -4,15 +4,7 @@
 require "csv"
 require "dorian/arguments"
 
-parsed =
-  Dorian::Arguments.parse(
-    version: {
-      alias: :v
-    },
-    help: {
-      alias: :h
-    }
-  )
+parsed = Dorian::Arguments.parse(version: { alias: :v }, help: { alias: :h })
 
 abort parsed.help if parsed.options.help
 
@@ -21,9 +13,10 @@ if parsed.options.version
 end
 
 output = parsed.arguments.last || parsed.files.last
-inputs = (parsed.files - [output]).map do |file|
-  CSV.parse(File.read(file), headers: true)
-end
+inputs =
+  (parsed.files - [output]).map do |file|
+    CSV.parse(File.read(file), headers: true)
+  end
 headers = inputs.first.headers
 
 CSV.open(output, "w") do |csv|
